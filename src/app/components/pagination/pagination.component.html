@@ -1,0 +1,42 @@
+<!--<nav aria-label="Page navigation">-->
+<!--  <ul class="pagination justify-content-center" [ngClass]="loadClasses()">-->
+<!--    <li class="page-item" [class.disabled]="pager.isFirst()">-->
+<!--      <a class="page-link" (click)="setPage(1)" tabindex="-1" aria-disabled="true">{{first}}</a>-->
+<!--    </li>-->
+<!--    <li class="page-item" [class.disabled]="pager.isFirst()">-->
+<!--      <a class="page-link" (click)="setPage(pager.currentPage-1)" tabindex="-1" aria-disabled="true">{{previous}}</a>-->
+<!--    </li>-->
+<!--    <li *ngFor="let page of pager.pages"-->
+<!--        class="page-item" [class.active]="page==pager.currentPage">-->
+<!--      <a class="page-link" (click)="setPage(page)">{{page}}</a>-->
+<!--    </li>-->
+<!--    <li class="page-item" [class.disabled]="pager.isLast()">-->
+<!--      <a class="page-link" (click)="setPage(pager.currentPage+1)">{{next}}</a>-->
+<!--    </li>-->
+<!--    <li class="page-item" [class.disabled]="pager.isLast()">-->
+<!--      <a class="page-link" (click)="setPage(pager.totalPages)">{{last}}</a>-->
+<!--    </li>-->
+<!--  </ul>-->
+<!--</nav>-->
+<ion-buttons slot="end">
+
+  <ion-button color="primary"
+              [disabled]="pager.isFirst()" (click)="setPage(1)">
+    {{first}}
+  </ion-button>
+  <ion-button [disabled]="pager.isFirst()" (click)="setPage(pager.currentPage-1)">
+    <ion-icon name="chevron-back"></ion-icon>
+  </ion-button>
+  <ion-button color="primary" [fill]="page==pager.currentPage?'solid':'clear'"
+              (click)="setPage(page)" *ngFor="let page of pager.pages">
+    {{page}}
+  </ion-button>
+  <ion-button [disabled]="pager.isLast()" (click)="setPage(pager.currentPage+1)">
+    <ion-icon name="chevron-forward"></ion-icon>
+  </ion-button>
+  <ion-button color="primary" [disabled]="pager.isLast()"
+              (click)="setPage(pager.totalPages)" (click)="setPage(1)">
+    {{last}}
+  </ion-button>
+
+</ion-buttons>

@@ -1,0 +1,8 @@
+{
+  "name": "faceInterface",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

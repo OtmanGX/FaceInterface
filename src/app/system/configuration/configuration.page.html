@@ -1,0 +1,83 @@
+<app-header [title]="'Configuration du système'"> </app-header>
+
+
+<ion-content>
+
+    <ion-grid *ngIf="config">
+        <ion-segment #segment (ionChange)="segmentChanged($event)" value="basic">
+            <ion-segment-button value="basic">
+                <ion-label>Basique
+                </ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="advanced">
+                <ion-label>Avancée
+                </ion-label>
+            </ion-segment-button>
+        </ion-segment>
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+            <ion-col size-lg="7" size-sm="12" size-md="12">
+                <ng-form id="ngForm" #f="ngForm" (ngSubmit)="submit(f.value)">
+                    <ion-list>
+                        <ion-list-header>
+                            <ion-label color="medium">
+                                Les paramètres
+                            </ion-label>
+                        </ion-list-header>
+
+
+                        <ion-item>
+                            <ion-label>Mode de détection</ion-label>
+                            <ion-select [ngModel]="config.detection_mode" name="detection_mode" placeholder="Select One">
+                                <ion-select-option value="cascade">
+                                    Cascade Classifier
+                                </ion-select-option>
+                                <ion-select-option value="dnn">
+                                    Single Shot Detector
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-label>Diffusion en direct</ion-label>
+                            <ion-toggle name="stream" [ngModel]="config.stream" checked></ion-toggle>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-label>Diffusion avec détails</ion-label>
+                            <ion-toggle name="draw" [ngModel]="config.draw" checked></ion-toggle>
+                        </ion-item>
+
+                        <span *ngIf="advanced">
+                            <ion-item>
+                                <ion-label>Confidence de detection</ion-label>
+                                <ion-input slot="end" name="confidence" type="number" min="0.2" step="0.1" max="1" [ngModel]="config.confidence.toString()"></ion-input>
+                            </ion-item>
+
+                            <ion-item>
+                                <ion-label>Minimum de frames par mouvement</ion-label>
+                                <ion-input slot="end" name="min_motion_frames" type="number" max="1" [ngModel]="config.min_motion_frames"></ion-input>
+                            </ion-item>
+                        </span>
+
+<!--                        <ion-item>-->
+<!--                            <ion-label>Utiliser la camera de RPi</ion-label>-->
+<!--                            <ion-toggle name="picamera" [ngModel]="" checked></ion-toggle>-->
+<!--                        </ion-item>-->
+                    </ion-list>
+                </ng-form>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+
+
+</ion-content>
+
+<ion-footer class="ion-no-border ion-margin-vertical ion-margin-bottom">
+
+    <ion-buttons class="ion-justify-content-center ion-align-items-center">
+        <ion-button (click)="NgForm.ngSubmit.emit()" size="large" fill="solid" color="success">
+            Enregistrer
+        </ion-button>
+    </ion-buttons>
+</ion-footer>

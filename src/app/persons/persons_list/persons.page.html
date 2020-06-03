@@ -1,0 +1,84 @@
+<app-header [title]="'Liste de personnes'"> </app-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list *ngIf="persons$" style="margin-bottom: 50px;">
+<!--    <ion-list-header>-->
+<!--      <h1>Persons</h1>-->
+<!--    </ion-list-header>-->
+
+    <ion-item class="ion-activate" *ngFor="let person of (persons$| async)" lines="unset">
+      <ion-avatar slot="start">
+        <ion-img [src]="'../assets/avatar.png'"></ion-img>
+      </ion-avatar>
+
+      <ion-label class="ion-text-wrap">
+        <div slot="start">
+        <h2 style="display: inline; font-size: large">
+          {{person.name | titlecase}}
+        </h2>
+          <span *ngIf="person.age" style="color: #7974ff">
+          <small>{{person.age}} ans</small>
+        </span>
+        <div style="color: #acacac">
+          <small>{{person.matricule}}</small>
+        </div>
+
+
+        <h3>
+          <ion-chip *ngFor="let label of person.labels" color="primary">
+            <ion-icon name="bookmark"></ion-icon>
+            <ion-label>{{label.name}}</ion-label>
+          </ion-chip>
+        </h3>
+        </div>
+      </ion-label>
+
+      <ion-button fill="clear" (click)="presentPopover($event, person.id)">
+      <ion-icon slot="end" name="ellipsis-vertical"></ion-icon>
+      </ion-button>
+
+    </ion-item>
+  </ion-list>
+
+
+  <!-- fab placed to the bottom end -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="'/add-person'">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
+<ion-footer>
+  <ion-toolbar style="vertical-align: middle">
+      <ion-buttons>
+        <ion-searchbar #searchbar animated showCancelButton="focus"
+                       (change)="search(searchbar.value)"
+                       (ionCancel)="cancelSearch()">
+
+        </ion-searchbar>
+        <ion-button (click)="presentAlertCheckBox()">
+          <div>
+          <ion-icon name="filter"></ion-icon>
+          <label><small>Filtrer</small></label>
+          </div>
+        </ion-button>
+        <ion-button (click)="presentAlertRadio()">
+          <div>
+          <ion-icon name="funnel"></ion-icon>
+            <label><small>Trier</small></label>
+          </div>
+        </ion-button>
+      <ion-button color="secondary">
+                <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical">
+                </ion-icon>
+       </ion-button>
+
+      </ion-buttons>
+
+
+  </ion-toolbar>
+</ion-footer>

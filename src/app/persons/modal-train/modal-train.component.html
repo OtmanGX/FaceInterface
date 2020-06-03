@@ -1,0 +1,36 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Modal Content</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="dismiss(true)">Transférer</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="dismiss()">Close</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-grid style="height: 100%">
+    <ion-row class="ion-justify-content-center ion-align-items-center"
+             style="height:100%; flex-direction: column">
+      <ion-col size="6">
+        <ion-item class="fileUpload">
+          <ion-button size="default">
+            <ion-icon class="ion-padding-end" name="cloud-upload"></ion-icon>
+            <ion-label>{{inputlabel}}</ion-label>
+            <ion-input #input type="file" accept="image/*" multiple data-multiple-caption="{count} files selected"
+                       (change)="changeImage($event)"></ion-input>
+          </ion-button>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+<!--  <ion-list>-->
+<!--    -->
+<!--    -->
+<!--  </ion-list>-->
+</ion-content>
+
+

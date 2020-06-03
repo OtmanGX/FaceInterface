@@ -1,0 +1,67 @@
+:root {
+  --ion-color-secondary: #006600;
+  --ion-color-secondary-rgb: 0,102,0;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255,255,255;
+  --ion-color-secondary-shade: #005a00;
+  --ion-color-secondary-tint: #1a751a;
+}
+
+ion-img {
+  //width: 120px;
+  height: 120px;
+}
+ion-button {
+  margin-rigth: 0px;
+  padding-right: 0px;
+}
+
+app-pagination {
+  vertical-align: center;
+}
+
+.select-card {
+  background-color: rgb(129, 171, 231) !important;
+  opacity: 0.7;
+}
+
+
+.select-item {
+  --ion-background-color: rgb(129, 171, 231);
+  //--color-activated: #f63d3d;
+  //--color-hover: #f63d3d;
+  //--background-hover: #f63d3d;
+  //--background-hover-opacity: 0.7;
+}
+
+ion-button {
+  text-transform: none;
+}
+
+//ion-button div {
+//  display: flex;
+//  flex-flow: column nowrap;
+//  align-items: center;
+//}
+
+ion-button ion-icon {
+  font-size: 18px;
+}
+
+  //ion-card:hover {
+  //  background-color: #f63d3d;
+  //  opacity: 0.7;
+  //}
+
+//ion-item:hover {
+//  --color-hover: #f63d3d;
+//  --background-hover: #bbfc54;
+//}
+
+//ion-item {
+//  background-color: lemonchiffon !important;
+//}
+//
+//ion-card {
+//  background-color: #2dd36f;
+//}

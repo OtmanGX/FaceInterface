@@ -1,0 +1,44 @@
+<app-header [title]="'Ajouter un person'"></app-header>
+
+  <!-- Inputs with labels -->
+<ion-content>
+<ion-list>
+  <form #f="ngForm" (ngSubmit)="submit(f.value)" ngNativeValidate>
+  <ion-item>
+    <ion-label position="floating">Nom<ion-text color="danger">*</ion-text></ion-label>
+    <ion-input required name="name" ngModel=""></ion-input>
+  </ion-item>
+    <ion-item>
+      <ion-label position="floating">Matricule</ion-label>
+      <ion-input name="matricule" placeholder="générer automatiquement" ngModel=""></ion-input>
+    </ion-item>
+  <ion-item>
+    <ion-label position="floating">Age</ion-label>
+    <ion-input name="age" type="number" ngModel=""></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label>Activé</ion-label>
+    <ion-toggle name="active" [(ngModel)]="toggleState"></ion-toggle>
+  </ion-item>
+  <ion-item>
+    <ion-label>Avatar</ion-label>
+    <ion-input name="avatar" type="file" accept="image/*" (change)="changeImage($event)" ></ion-input>
+  </ion-item>
+  <ion-item>
+  <ion-label position="floating">Labels</ion-label>
+    <ion-input (keyup)="labelsKeyUp($event.target)" type="text"></ion-input>
+  </ion-item>
+    <div class="ion-margin">
+      <ion-chip *ngFor="let label of labels">
+        <ion-label>{{label}}</ion-label>
+        <ion-icon name="close" (click)="removeLabel(label)"></ion-icon>
+      </ion-chip>
+    </div>
+
+    <ion-button class="ion-margin-start" type="submit" color="success">Valider</ion-button>
+  </form>
+
+</ion-list>
+
+
+</ion-content>

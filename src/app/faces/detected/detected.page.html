@@ -1,0 +1,68 @@
+<app-header [title]="'Personnes détectés'"> </app-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row id="zone1" class="zone" *ngIf="faces">
+      <ion-col class="ion-activatable" size-sm="6" size-lg="2" size-md="3" *ngFor="let face of faces ; first as isFirst">
+        <ion-card (click)="selectCard($event, face.id)"
+                  [ngClass]="{'select-card':selectedElements.includes(face.id)}">
+          <ion-item [ngClass]="{'select-card':selectedElements.includes(face.id),
+          'ion-no-margin':true}">
+            <small><ion-icon size="small" slot="start" name="calendar"></ion-icon>{{face.created_at| date: 'yy/MM/dd HH:mm:ss'}}</small>
+            <ion-button (click)="presentPopover($event, face.id)" size="small" slot="end" fill="clear">
+            <ion-icon name="ellipsis-vertical"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-card-content>
+
+          </ion-card-content>
+          <ion-img [src]="face.image"></ion-img>
+          <ion-card-header>
+            <ion-card-title>{{face.label?face.label.name:'Inconnu'+face.unknown_number}} </ion-card-title>
+              <ion-card-subtitle>
+                  {{face.precision}}
+              </ion-card-subtitle>
+          </ion-card-header>
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center ion-text-center">
+      <ion-col class="ion-align-self-center ">
+        <div>
+    <app-pagination *ngIf="numberpages" [pageSize]="numberpages"
+                    (pageChanged)="OnPageChanged($event)" >
+
+    </app-pagination>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+<ion-footer [ngStyle]="footerStyle()">
+  <ion-toolbar>
+    <ion-buttons class="ion-align-items-center ion-justify-content-center ion-align-self-center">
+      <ion-button (click)="presentModal(selectedElements)">
+          <ion-icon name="arrow-redo-circle"></ion-icon>
+          &nbsp;Déplacer
+      </ion-button>
+      <ion-button (click)="deleteSelected()">
+          <ion-icon name="trash"></ion-icon>
+          &nbsp;Supprimer
+      </ion-button>
+      <ion-button (click)="selectedElements=[]">
+          <ion-icon name="return-up-back"></ion-icon>
+          &nbsp;Annuler
+      </ion-button>
+<!--      <ion-button color="secondary">-->
+<!--        <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical">-->
+<!--        </ion-icon>-->
+<!--      </ion-button>-->
+
+    </ion-buttons>
+
+
+  </ion-toolbar>
+</ion-footer>

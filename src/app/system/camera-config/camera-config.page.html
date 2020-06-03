@@ -1,0 +1,75 @@
+<app-header [title]="'Configuration de la camera'"> </app-header>
+
+
+<ion-content>
+
+    <ion-grid *ngIf="config">
+        <ion-segment #segment (ionChange)="segmentChanged($event)" value="basic">
+            <ion-segment-button value="basic">
+                <ion-label>Basique
+                </ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="advanced">
+                <ion-label>Avancée
+                </ion-label>
+            </ion-segment-button>
+        </ion-segment>
+        <ion-row class="ion-justify-content-center ion-align-items-center">
+            <ion-col size="7">
+                <ng-form id="ngForm" #f="ngForm" (ngSubmit)="submit(f.value)">
+                    <ion-list>
+                        <ion-list-header>
+                            <ion-label color="medium">
+                                Les paramètres
+                            </ion-label>
+                        </ion-list-header>
+
+
+                        <ion-item>
+                            <ion-label>Résolution</ion-label>
+                            <ion-select [ngModel]="config.resolution" name="resolution" placeholder="Select One">
+                                <ion-select-option [value]="['1080', '720']">
+                                    1080x720
+                                </ion-select-option>
+                                <ion-select-option [value]="['720', '480']">
+                                    720x480
+                                </ion-select-option>
+                                <ion-select-option [value]="['480', '360']">
+                                    480x360
+                                </ion-select-option>
+                            </ion-select>
+                        </ion-item>
+
+                        <ion-item>
+                            <ion-label>FPS</ion-label>
+                            <ion-input slot="end" type="number" name="fps" [ngModel]="config.fps.toString()">
+                            </ion-input>
+                        </ion-item>
+
+
+                        <span *ngIf="advanced">
+
+                        </span>
+
+                        <ion-item>
+                            <ion-label>Utiliser la camera de RPi</ion-label>
+                            <ion-toggle name="picamera" [ngModel]="" checked></ion-toggle>
+                        </ion-item>
+                    </ion-list>
+                </ng-form>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+
+
+</ion-content>
+
+<ion-footer class="ion-no-border ion-margin-vertical ion-margin-bottom">
+
+    <ion-buttons class="ion-justify-content-center ion-align-items-center">
+        <ion-button (click)="NgForm.ngSubmit.emit()" size="large" fill="solid" color="success">
+            Enregistrer
+        </ion-button>
+    </ion-buttons>
+</ion-footer>

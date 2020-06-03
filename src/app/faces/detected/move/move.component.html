@@ -1,0 +1,58 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Déplacer</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="f.ngSubmit.emit()">Déplacer</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="dismiss()">Annuler</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-grid style="height: 100%">
+    <ion-row class="ion-justify-content-center ion-align-items-center"
+             style="height:100%; flex-direction: column">
+      <ion-col size="6">
+        <ng-form id="ngForm" #f="ngForm" (ngSubmit)="move(f.value)">
+        <ion-list>
+          <ion-list-header>
+            <ion-label color="medium">
+              Les options
+            </ion-label>
+          </ion-list-header>
+
+
+          <ion-item>
+            <ion-label>Personne</ion-label>
+            <ion-select [ngModel]="" name="id_person" placeholder="Select One">
+              <ion-select-option *ngFor="let person of (persons$|async)" [value]="person.id">
+                {{person.name}}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Dataset</ion-label>
+            <ion-select ngModel="Train" name="dataset" value="Train" okText="Okay" cancelText="Dismiss">
+              <ion-select-option value="Train">Entraînement</ion-select-option>
+              <ion-select-option value="Test">Teste</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-input name="id_face" type="hidden" [ngModel]="id" [value]="id"></ion-input>
+
+        </ion-list>
+        </ng-form>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+  <!--  <ion-list>-->
+  <!--    -->
+  <!--    -->
+  <!--  </ion-list>-->
+</ion-content>
+
+

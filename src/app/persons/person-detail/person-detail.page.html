@@ -1,0 +1,55 @@
+<app-header title="Person"> </app-header>
+
+<ion-content>
+  <!-- Default Segment -->
+  <ion-segment #segment (ionChange)="segmentChanged($event)" value="Train">
+    <ion-segment-button value="Train">
+      <ion-label>Entrainement
+        <ion-badge color="primary">{{train?train.length:0}}</ion-badge>
+      </ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="Test">
+      <ion-label>Teste
+        <ion-badge color="medium">{{test?test.length:0}}</ion-badge>
+      </ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div *ngIf="dataset">
+    <ion-grid>
+      <ion-row class="ion-align-items-center ion-justify-content-center ion-align-self-center">
+        <ion-col size-sm="6" size-lg="2" size-md="3" *ngFor="let face of (dataset)">
+          <ion-card>
+            <ion-item class="ion-no-margin">
+
+              <small><ion-icon size="small" slot="start" name="calendar"></ion-icon>{{face.created_at| date: 'yy/MM/dd HH:mm:ss'}}</small>
+              <ion-button (click)="presentPopover($event, face.id, face.dataset_type)" size="small" slot="end" fill="clear">
+                <ion-icon name="ellipsis-vertical"></ion-icon>
+              </ion-button>
+            </ion-item>
+            <ion-card-content>
+
+
+            </ion-card-content>
+            <ion-img [src]="face.image"></ion-img>
+
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-fab *ngIf="segment.value=='Train';else test" vertical="bottom" horizontal="start" slot="fixed">
+      <ion-fab-button (click)="addTrain('Train')">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+    <ng-template #test>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="addTrain('Test')" color="success">
+          <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </ng-template>
+  </div>
+
+</ion-content>
