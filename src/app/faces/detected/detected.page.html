@@ -3,6 +3,11 @@
 <ion-content>
   <ion-grid>
     <ion-row id="zone1" class="zone" *ngIf="faces">
+
+      <ion-chip *ngIf="!faces.length" color="warning">
+        <ion-label color="dark">Pas de nouvelles pour le moment</ion-label>
+      </ion-chip>
+
       <ion-col class="ion-activatable" size-sm="6" size-lg="2" size-md="3" *ngFor="let face of faces ; first as isFirst">
         <ion-card (click)="selectCard($event, face.id)"
                   [ngClass]="{'select-card':selectedElements.includes(face.id)}">

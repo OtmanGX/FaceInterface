@@ -10,9 +10,12 @@
 <!--      <h1>Persons</h1>-->
 <!--    </ion-list-header>-->
 
+    <ion-chip *ngIf="!(persons$|async)?.length" color="warning">
+      <ion-label color="dark">Pas de nouvelles pour le moment</ion-label>
+    </ion-chip>
     <ion-item class="ion-activate" *ngFor="let person of (persons$| async)" lines="unset">
       <ion-avatar slot="start">
-        <ion-img [src]="'../assets/avatar.png'"></ion-img>
+        <ion-img [src]="'assets/avatar.png'"></ion-img>
       </ion-avatar>
 
       <ion-label class="ion-text-wrap">
