@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {PersonsService} from '../../services/persons.service';
-import {Route, Router} from '@angular/router';
+import {ActivatedRoute, Route, Router} from '@angular/router';
+import {NavParams} from "@ionic/angular";
+import {Person, emptyPerson} from '../../../db'
 
 @Component({
   selector: 'app-add-person',
@@ -12,12 +14,22 @@ export class AddPersonPage implements OnInit {
   toggleState = true;
   labels: Set<string>;
   avatar;
+  person:Person;
+  edit = false;
 
   constructor(private service: PersonsService,
-              private route: Router) { }
+              private route: Router,
+              public activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.labels = new Set<string>();
+    this.person = emptyPerson;
+    if (this.activatedRoute.snapshot.paramMap.has('edit')) {
+      this.edit = true;
+      this.person = this.service.currentPerson;
+    }
+
+    console.log(this.person);
   }
 
   labelsKeyUp(event: any) {

@@ -72,16 +72,20 @@ export class PersonsPage implements OnInit {
       console.log(value);
       switch (value.data) {
         case 'delete':
-          this.service.delete(i).subscribe(() => {
-            this.presentToast(db.SUCCESS_MSG);
-            this.loadPersons();
-          }, error => this.presentToast(db.ERROR_MSG, 'warning'));
+          this.deletePerson(i);
           break;
         case 'edit':
           this.openDetail(i, person);
       }
     });
     return await popover.present();
+  }
+
+  deletePerson(id:number) {
+    this.service.delete(id).subscribe(() => {
+      this.presentToast(db.SUCCESS_MSG);
+      this.loadPersons();
+    }, error => this.presentToast(db.ERROR_MSG, 'warning'));
   }
 
   doRefresh(event) {
@@ -241,37 +245,32 @@ export class PersonsPage implements OnInit {
     this.router.navigate(['person-detail', {id, person}]);
 }
 
-  async presentActionSheet() {
+  async presentActionSheet(person) {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Albums',
+      header: person.name,
       cssClass: 'my-action-sheet',
       buttons: [{
-        text: 'Delete',
+        text: 'Supprimer',
         role: 'destructive',
         icon: 'trash',
         handler: () => {
-          console.log('Delete clicked');
+          this.deletePerson(person.id);
         }
       }, {
-        text: 'Share',
-        icon: 'share',
+        text: 'Modifier',
+        icon: 'create',
         handler: () => {
-          console.log('Share clicked');
+          this.service.currentPerson = person;
+          this.router.navigate(['add-person', {edit: true}]);
         }
       }, {
-        text: 'Play (open modal)',
-        icon: 'caret-forward-circle',
+        text: 'Dataset',
+        icon: 'images',
         handler: () => {
-          console.log('Play clicked');
+          this.openDetail(person.id, person.name);
         }
       }, {
-        text: 'Favorite',
-        icon: 'heart',
-        handler: () => {
-          console.log('Favorite clicked');
-        }
-      }, {
-        text: 'Cancel',
+        text: 'Annuler',
         icon: 'close',
         role: 'cancel',
         handler: () => {

@@ -1,4 +1,4 @@
-<app-header [title]="'Ajouter un personne'"></app-header>
+<app-header [title]="(edit?'Modifier':'Ajouter')+' un personne'"></app-header>
 
   <!-- Inputs with labels -->
 <ion-content>
@@ -6,15 +6,15 @@
   <form #f="ngForm" (ngSubmit)="submit(f.value)" ngNativeValidate>
   <ion-item>
     <ion-label position="floating">Nom<ion-text color="danger">*</ion-text></ion-label>
-    <ion-input required name="name" ngModel=""></ion-input>
+    <ion-input required name="name" [ngModel]="person?.name"></ion-input>
   </ion-item>
     <ion-item>
       <ion-label position="floating">Matricule</ion-label>
-      <ion-input name="matricule" placeholder="générer automatiquement" ngModel=""></ion-input>
+      <ion-input name="matricule" placeholder="générer automatiquement" [ngModel]="person?.matricule"></ion-input>
     </ion-item>
   <ion-item>
     <ion-label position="floating">Age</ion-label>
-    <ion-input name="age" type="number" ngModel=""></ion-input>
+    <ion-input name="age" type="number" [ngModel]="person?.age"></ion-input>
   </ion-item>
   <ion-item>
     <ion-label>Activé</ion-label>
@@ -22,7 +22,7 @@
   </ion-item>
   <ion-item>
     <ion-label>Avatar</ion-label>
-    <ion-input name="avatar" type="file" accept="image/*" (change)="changeImage($event)" >
+    <ion-input name="avatar" type="file" accept="image/*" (change)="changeImage($event)" ngModel="" >
 
     </ion-input>
   </ion-item>

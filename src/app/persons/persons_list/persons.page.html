@@ -30,7 +30,6 @@
           <small>{{person.matricule}}</small>
         </div>
 
-
         <h3>
           <ion-chip *ngFor="let label of person.labels" color="primary">
             <ion-icon name="bookmark"></ion-icon>
@@ -40,7 +39,7 @@
         </div>
       </ion-label>
 
-      <ion-button fill="clear" (click)="presentActionSheet()">
+      <ion-button fill="clear" (click)="presentActionSheet(person)">
 <!--                  (click)="presentPopover($event, person.id, person.name)"-->
       <ion-icon slot="end" name="ellipsis-vertical"></ion-icon>
       </ion-button>
