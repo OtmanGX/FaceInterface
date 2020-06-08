@@ -45,6 +45,15 @@ export class DetectedPage implements OnInit {
         });
  }
 
+    doRefresh(event) {
+        console.log('Begin async operation');
+        setTimeout(() => {
+            console.log('Async operation has ended');
+            this.loadDetectedFaces();
+            event.target.complete();
+        }, 2000);
+    }
+
   OnPageChanged(pagenumber: number) {
     console.log(pagenumber);
     this.params.set('page', pagenumber);

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {ModalController, PopoverController, ToastController} from '@ionic/angular';
+import {Component, Input, OnInit} from '@angular/core';
+import {ActionSheetController, ModalController, PopoverController, ToastController} from '@ionic/angular';
 import {ModalTrainComponent} from '../modal-train/modal-train.component';
 import {DatasetService} from '../../services/dataset.service';
 import {ActivatedRoute} from '@angular/router';
@@ -20,6 +20,8 @@ export class PersonDetailPage implements OnInit {
   trainSelected = true;
   params = new HttpParams();
   id;
+  person;
+  selectedElements: any[] = [];
   constructor(public modalController: ModalController,
               public service: DatasetService,
               public activatedRoute: ActivatedRoute,
@@ -28,6 +30,7 @@ export class PersonDetailPage implements OnInit {
 
   ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.person = this.activatedRoute.snapshot.paramMap.get('person');
     if (!this.id) {
       this.id = '48';
     }
@@ -35,13 +38,17 @@ export class PersonDetailPage implements OnInit {
     this.load_faces();
   }
 
-  async presentPopover(ev: any, i: number, dataset: string) {
+  getDataset() {
+    return this.trainSelected ? 'déplacer vers Teste' : 'déplacer vers Entrainement';
+  }
+
+  async presentPopover(ev: any, i: number) {
     const popover = await this.popoverController.create({
       component: PopoverEditComponent,
       event: ev,
       translucent: true,
       componentProps: {data: {
-        move: dataset === 'Train' ? 'déplacer vers Teste' : 'déplacer vers Entrainement',
+        move: this.getDataset(),
           delete: 'Supprimer',
           cancel: 'Annuler'}}
     });
@@ -49,18 +56,10 @@ export class PersonDetailPage implements OnInit {
       console.log(value);
       switch (value.data) {
         case 'delete':
-          this.service.delete(i).subscribe(() => {
-            this.presentToast(db.SUCCESS_MSG);
-            this.load_faces();
-          }, error => this.presentToast(db.ERROR_MSG, 'warning'));
+          this.deleteItem(i);
           break;
         case 'move':
-          const data = {dataset_type: this.dataset === this.test ? 'Train' : 'Test'};
-          this.service.patch(i, data).subscribe(() => {
-            console.log('Success');
-            this.load_faces();
-              },
-              error => console.log('Error'));
+          this.move(i);
       }
     });
     return await popover.present();
@@ -127,5 +126,55 @@ export class PersonDetailPage implements OnInit {
         this.load_faces();
       }, error => console.log('Error'));
     }
+  }
+
+  selectCard($event: Event, id) {
+    const index = this.selectedElements.indexOf(id, 0);
+    if (index > -1) {
+      this.selectedElements.splice(index, 1);
+    } else {
+      this.selectedElements.push(id);
+    }
+    console.log('card selected');
+  }
+
+  footerStyle() {
+    if (this.selectedElements.length === 0) {
+      return {display: 'none'};
+    }
+  }
+
+  deleteSelected() {
+    this.selectedElements.forEach(id => {
+      this.deleteItem(id);
+    });
+    this.selectedElements = [];
+  }
+
+  move(i) {
+    const data = {dataset_type: this.trainSelected ? 'Test' : 'Train'};
+    if (typeof i === 'number') {
+      this.service.patch(i, data).subscribe(() => {
+            console.log('Success');
+            this.load_faces();
+          },
+          error => console.log('Error'));
+    } else {
+      i.forEach(id => {
+        this.service.patch(id, data).subscribe(() => {
+              console.log('Success');
+              this.load_faces();
+            },
+            error => console.log('Error'));
+      });
+    }
+    this.selectedElements = [];
+    }
+
+  private deleteItem(id: number) {
+    this.service.delete(id).subscribe(() => {
+      this.presentToast(db.SUCCESS_MSG);
+      this.load_faces();
+    }, error => this.presentToast(db.ERROR_MSG, 'warning'));
   }
 }

@@ -1,6 +1,9 @@
 <app-header [title]="'Personnes détectés'"> </app-header>
 
 <ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <ion-grid>
     <ion-row id="zone1" class="zone" *ngIf="faces">
 

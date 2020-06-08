@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from  '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import {IonRouterOutlet, PopoverController} from '@ionic/angular';
 import { PopoverComponent } from '../popover/popover.component'
 
 @Component({
@@ -11,7 +11,8 @@ export class HeaderComponent implements OnInit {
   @Input()
   title: string;
 
-  constructor(public popoverController: PopoverController) { }
+  constructor(public popoverController: PopoverController,
+              private routerOutlet: IonRouterOutlet) { }
 
   ngOnInit() {}
 

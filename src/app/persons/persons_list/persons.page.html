@@ -40,7 +40,8 @@
         </div>
       </ion-label>
 
-      <ion-button fill="clear" (click)="presentPopover($event, person.id)">
+      <ion-button fill="clear" (click)="presentActionSheet()">
+<!--                  (click)="presentPopover($event, person.id, person.name)"-->
       <ion-icon slot="end" name="ellipsis-vertical"></ion-icon>
       </ion-button>
 

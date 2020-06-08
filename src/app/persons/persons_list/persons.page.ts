@@ -1,7 +1,14 @@
 import {Component, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import {PersonsService} from '../../services/persons.service';
 import {Observable} from 'rxjs';
-import {AlertController, IonButtons, IonSearchbar, PopoverController, ToastController} from '@ionic/angular';
+import {
+  ActionSheetController,
+  AlertController,
+  IonButtons,
+  IonSearchbar,
+  PopoverController,
+  ToastController
+} from '@ionic/angular';
 import {PopoverComponent} from '../../components/popover/popover.component';
 import {PopoverEditComponent} from '../../components/popover-edit/popover-edit.component';
 import * as db from '../../../db';
@@ -23,6 +30,7 @@ export class PersonsPage implements OnInit {
               public popoverController: PopoverController,
               public toastController: ToastController,
               public alertController: AlertController,
+              public actionSheetController: ActionSheetController,
               private route: ActivatedRoute,
               private  router: Router) { }
 
@@ -53,7 +61,7 @@ export class PersonsPage implements OnInit {
     toast.present();
   }
 
-  async presentPopover(ev: any, i: number) {
+  async presentPopover(ev: any, i: number, person?: string) {
     const popover = await this.popoverController.create({
       component: PopoverEditComponent,
       event: ev,
@@ -70,7 +78,7 @@ export class PersonsPage implements OnInit {
           }, error => this.presentToast(db.ERROR_MSG, 'warning'));
           break;
         case 'edit':
-          this.openDetail(i);
+          this.openDetail(i, person);
       }
     });
     return await popover.present();
@@ -229,8 +237,49 @@ export class PersonsPage implements OnInit {
     await alert.present();
   }
 
-  openDetail(id: number) {
-    this.router.navigate(['person-detail', {id}]);
+  openDetail(id: number, person: string) {
+    this.router.navigate(['person-detail', {id, person}]);
 }
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Albums',
+      cssClass: 'my-action-sheet',
+      buttons: [{
+        text: 'Delete',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          console.log('Delete clicked');
+        }
+      }, {
+        text: 'Share',
+        icon: 'share',
+        handler: () => {
+          console.log('Share clicked');
+        }
+      }, {
+        text: 'Play (open modal)',
+        icon: 'caret-forward-circle',
+        handler: () => {
+          console.log('Play clicked');
+        }
+      }, {
+        text: 'Favorite',
+        icon: 'heart',
+        handler: () => {
+          console.log('Favorite clicked');
+        }
+      }, {
+        text: 'Cancel',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {
+          console.log('Cancel clicked');
+        }
+      }]
+    });
+    await actionSheet.present();
+  }
 
 }
