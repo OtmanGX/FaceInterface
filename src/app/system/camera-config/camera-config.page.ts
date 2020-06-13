@@ -28,6 +28,7 @@ export class CameraConfigPage implements OnInit {
   getConfig() {
     this.service.getConfig().subscribe(value => {
       this.config = value;
+      this.config.resolution = this.config.resolution.join(",");
     }, error => console.log(error));
 
 
@@ -43,6 +44,7 @@ export class CameraConfigPage implements OnInit {
   }
 
   submit(form) {
+    form.resolution = form.resolution.split(',');
     console.log(form);
     this.service.setConfig(form).subscribe(value => {
       console.log(value);

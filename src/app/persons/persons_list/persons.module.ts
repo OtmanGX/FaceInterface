@@ -11,6 +11,7 @@ import { PersonsPage } from './persons.page';
 import { ComponentsModule } from '../../components.module';
 
 import { PopoverEditComponent } from '../../components/popover-edit/popover-edit.component';
+import {ModalFilterComponent} from "./modal-filter/modal-filter.component";
 
 @NgModule({
   entryComponents: [],
@@ -21,6 +22,6 @@ import { PopoverEditComponent } from '../../components/popover-edit/popover-edit
     ComponentsModule,
     PersonsPageRoutingModule
   ],
-  declarations: [PersonsPage]
+  declarations: [PersonsPage, ModalFilterComponent]
 })
 export class PersonsPageModule {}

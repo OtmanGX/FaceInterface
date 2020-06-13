@@ -15,15 +15,15 @@ export class Pager {
   setPages() {
     let startPage;
     let endPage;
-    if (this.currentPage < 3 || this.totalPages <= 4) {
+    if (this.currentPage < 6 || this.totalPages <= 9) {
       startPage = 1;
-      endPage = this.totalPages > 4 ? 4 : this.totalPages;
-    } else if ((this.currentPage + 2) > this.totalPages) {
-      startPage = this.totalPages - 3;
+      endPage = this.totalPages > 9 ? 9 : this.totalPages;
+    } else if ((this.currentPage + 5) > this.totalPages) {
+      startPage = this.totalPages - 8;
       endPage = this.totalPages;
     } else {
-      startPage = this.currentPage - 1;
-      endPage = this.currentPage + 2;
+      startPage = this.currentPage - 4;
+      endPage = this.currentPage + 4;
     }
     this.pages = Array.from(new Array(endPage + 1 - startPage), (value, index) => index + startPage);
   }

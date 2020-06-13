@@ -63,6 +63,12 @@
                        (ionCancel)="cancelSearch()">
 
         </ion-searchbar>
+        <ion-button (click)="doRefresh($event)">
+          <div>
+            <ion-icon name="refresh-circle"></ion-icon>
+            <label><small>rafraîchir</small></label>
+          </div>
+        </ion-button>
         <ion-button (click)="presentAlertCheckBox()">
           <div>
           <ion-icon name="filter"></ion-icon>
@@ -75,13 +81,11 @@
             <label><small>Trier</small></label>
           </div>
         </ion-button>
-      <ion-button color="secondary">
+      <ion-button color="secondary" (click)="presentOtherOptions($event)">
                 <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical">
                 </ion-icon>
        </ion-button>
 
       </ion-buttons>
-
-
   </ion-toolbar>
 </ion-footer>

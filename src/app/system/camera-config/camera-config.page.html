@@ -26,15 +26,27 @@
 
 
                         <ion-item>
-                            <ion-label>Résolution</ion-label>
-                            <ion-select [ngModel]="config.resolution" name="resolution" placeholder="Select One">
-                                <ion-select-option [value]="['1080', '720']">
+                            <ion-label class="ion-text-wrap">Résolution</ion-label>
+                            <ion-select [ngModel]="config.resolution" name="resolution" placeholder="Sélectionner une">
+                                <ion-select-option [value]="'3840,2160'">
+                                    4K 3840x2160
+                                </ion-select-option>
+                                <ion-select-option [value]="'2048,1152'">
+                                    2048x1152
+                                </ion-select-option>
+                                <ion-select-option [value]="'1920,1080'">
+                                    1920x1080
+                                </ion-select-option>
+                                <ion-select-option [value]="'1280,800'">
+                                    1280x800
+                                </ion-select-option>
+                                <ion-select-option [value]="'1080,720'">
                                     1080x720
                                 </ion-select-option>
-                                <ion-select-option [value]="['720', '480']">
+                                <ion-select-option [value]="'720,480'">
                                     720x480
                                 </ion-select-option>
-                                <ion-select-option [value]="['480', '360']">
+                                <ion-select-option [value]="'480,360'">
                                     480x360
                                 </ion-select-option>
                             </ion-select>
@@ -48,11 +60,15 @@
 
 
                         <span *ngIf="advanced">
-
+                            <ion-item>
+                            <ion-label class="ion-text-wrap">temps d'accommodation de la caméra</ion-label>
+                            <ion-input slot="end" type="number" name="camera_warmup_time" [ngModel]="config.camera_warmup_time.toString()">
+                            </ion-input>
+                        </ion-item>
                         </span>
 
                         <ion-item>
-                            <ion-label>Utiliser la camera de RPi</ion-label>
+                            <ion-label class="ion-text-wrap">Utiliser la camera de RPi</ion-label>
                             <ion-toggle name="picamera" [ngModel]="" checked></ion-toggle>
                         </ion-item>
                     </ion-list>

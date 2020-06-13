@@ -5,6 +5,7 @@ const ERROR_MSG = 'Il y\'avais une erreur';
 export { SUCCESS_MSG, ERROR_MSG } ;
 
 export interface Person {
+    id?: number;
     name:string;
     avatar?;
     matricule?:string;

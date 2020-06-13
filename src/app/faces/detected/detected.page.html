@@ -4,7 +4,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-grid>
+  <ion-grid *ngIf="grid; else list">
     <ion-row id="zone1" class="zone" *ngIf="faces">
 
       <ion-chip *ngIf="!faces.length" color="warning">
@@ -26,7 +26,9 @@
           </ion-card-content>
           <ion-img [src]="face.image"></ion-img>
           <ion-card-header>
-            <ion-card-title>{{face.label?face.label.name:'Inconnu'+face.unknown_number}} </ion-card-title>
+            <ion-card-title>{{face.label?face.label.name:'Inconnu'+face.unknown_number}}
+              <ion-icon [color]="face.instate?'tertiary':'danger'" [name]="face.instate?'log-in':'log-out'"></ion-icon>
+            </ion-card-title>
               <ion-card-subtitle>
                   {{face.precision}}
               </ion-card-subtitle>
@@ -41,17 +43,55 @@
         <div>
     <app-pagination *ngIf="numberpages" [pageSize]="numberpages"
                     (pageChanged)="OnPageChanged($event)" >
-
     </app-pagination>
         </div>
       </ion-col>
     </ion-row>
   </ion-grid>
 
+  <ng-template #list>
+    <ion-list *ngIf="faces">
+      <ion-list-header color="primary">
+<!--        <ion-avatar></ion-avatar>-->
+        <ion-label>
+          Personne
+        </ion-label>
+        Date
+        <ion-label>
+
+        </ion-label>
+        <ion-label>
+          Etat
+        </ion-label>
+      </ion-list-header>
+        <ion-item *ngFor="let face of faces">
+          <ion-avatar>
+            <ion-img [src]="face.image"></ion-img>
+          </ion-avatar>
+          <ion-label>
+            {{face.label?face.label.name:'Inconnu'+face.unknown_number}}
+          </ion-label>
+
+          <ion-label>
+            <small><ion-icon size="small" slot="start" name="calendar"></ion-icon>{{face.created_at| date: 'yy/MM/dd HH:mm:ss'}}</small>
+          </ion-label>
+
+          <ion-chip>
+            <ion-label [color]="face.instate?'success':'secondary'"> {{face.instate?'Entrée':'Sortie'}}</ion-label>
+          </ion-chip>
+        </ion-item>
+
+    </ion-list>
+  </ng-template>
+
 </ion-content>
-<ion-footer [ngStyle]="footerStyle()">
+<ion-footer >
   <ion-toolbar>
-    <ion-buttons class="ion-align-items-center ion-justify-content-center ion-align-self-center">
+    <ion-buttons *ngIf="this.selectedElements.length; else default" class="ion-align-items-center ion-justify-content-center ion-align-self-center">
+      <ion-button (click)="selectAll()">
+          <ion-icon name="arrow-redo-circle"></ion-icon>
+          &nbsp;Sélectionner tout
+      </ion-button>
       <ion-button (click)="presentModal(selectedElements)">
           <ion-icon name="arrow-redo-circle"></ion-icon>
           &nbsp;Déplacer
@@ -70,7 +110,44 @@
 <!--      </ion-button>-->
 
     </ion-buttons>
+    <ng-template #default>
+      <ion-buttons class="ion-align-items-center ion-justify-content-center ion-align-self-center">
+        <ion-searchbar #searchbar animated showCancelButton="focus" style="flex-basis: 30%"
+                       (change)="search(searchbar.value)"
+                       (ionCancel)="cancelSearch()">
 
+        </ion-searchbar>
+        <ion-button (click)="doRefresh($event)">
+          <div>
+            <ion-icon name="refresh-circle"></ion-icon>
+            <label><small>rafraîchir</small></label>
+          </div>
+        </ion-button>
+        <ion-button>
+          <div>
+            <ion-icon name="filter"></ion-icon>
+            <label><small>Filtrer</small></label>
+          </div>
+        </ion-button>
+        <ion-button>
+          <div>
+            <ion-icon name="funnel"></ion-icon>
+            <label><small>Trier</small></label>
+          </div>
+        </ion-button>
+        <ion-button (click)="presentModeView($event)">
+          <div>
+            <ion-icon name="grid"></ion-icon>
+            <label><small>View</small></label>
+          </div>
+        </ion-button>
+        <ion-button (click)="presentOtherOptions($event)" color="secondary">
+          <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical">
+          </ion-icon>
+        </ion-button>
+
+      </ion-buttons>
+    </ng-template>
 
   </ion-toolbar>
 </ion-footer>

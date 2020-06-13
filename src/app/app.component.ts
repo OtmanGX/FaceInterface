@@ -61,7 +61,7 @@ export class AppComponent implements OnInit {
       ]
     },
   {
-      title: 'Logout',
+      title: 'Se déconnecter',
       url: 'login',
       icon: 'key'
     },

@@ -25,4 +25,8 @@ export class SystemService {
   setConfig(data): Observable<any> {
     return this.http.post(([this.baseurl, 'conf'].join('/')), data);
   }
+
+  getState(): Observable<any> {
+    return this.http.get(([this.baseurl, 'running'].join('/')));
+  }
 }

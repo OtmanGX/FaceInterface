@@ -27,9 +27,8 @@ export class AddPersonPage implements OnInit {
     if (this.activatedRoute.snapshot.paramMap.has('edit')) {
       this.edit = true;
       this.person = this.service.currentPerson;
+      this.labels = new Set<string>(this.person.labels.map(x=> x.name));
     }
-
-    console.log(this.person);
   }
 
   labelsKeyUp(event: any) {
@@ -45,7 +44,6 @@ export class AddPersonPage implements OnInit {
   }
 
   submit(form: any) {
-    // console.log(form);
     if (!form.age) {
       form.age = '';
     }
@@ -65,11 +63,20 @@ export class AddPersonPage implements OnInit {
     //     'labels', JSON.stringify(form.labels));
 
     // form.avatar = this.avatar;
-
+    if (this.edit) {
+      console.log(form);
+      console.log(this.person);
+      this.service.update(this.person.id, formData).subscribe(() => {
+        console.log('Success update');
+        this.route.navigate(['persons_list', {result: 'success'}]);
+          }, error => console.log(error));
+    }
+    else {
     this.service.create(formData).subscribe(() => {
       console.log('Success submit');
       this.route.navigate(['persons_list', {result: 'success'}]);
     }, error => console.log(error));
+  }
   }
 
   toFormData(form) {
@@ -81,7 +88,6 @@ export class AddPersonPage implements OnInit {
     }
     return formData;
   }
-
 
   changeImage(event) {
     this.avatar = event.target.files[0];

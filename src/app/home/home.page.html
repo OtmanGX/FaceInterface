@@ -5,8 +5,167 @@
     </ion-toolbar>
   </ion-header> -->
 <ion-content>
-	<div id="container">
-    <strong class="capitalize">Tableau de bord</strong>
-    <p>En cours</p>
+	<div class="ion-margin ion-margin-horizontal ion-margin-vertical" id="container">
+<!--    <strong class="capitalize">Tableau de bord</strong>-->
+
+
+<ion-grid>
+    <ion-row>
+        <p class="ion-padding" style="background-color: #ddffff; border-left: 5px solid skyblue;">
+            <ion-label color="dark">
+                Le programme <b>FaceReco</b> est&nbsp;
+                <b>
+                    {{(state$|async)?"En marche":"en arrêt"}}
+                </b>
+                <ion-icon [color]="(state$|async)?'success':'danger'" size="default" name="ellipse">
+                </ion-icon>
+            </ion-label>
+        </p>
+    </ion-row>
+    <ion-row class="ion-justify-content-center ion-align-self-center">
+        <ion-col size-lg="6" size="12">
+            <ion-list>
+                <ion-list-header lines="full" color="primary">
+                    <ion-label>
+                        <ion-icon name="apps"></ion-icon> &nbsp; <strong>Vue d'ensemble</strong>
+                    </ion-label>
+                </ion-list-header>
+                <ion-item>
+                    <ion-label>
+                        nombre de personnes <ion-badge color="primary">{{(resultInfo$|async)?.persons}}</ion-badge>
+                    </ion-label>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>
+                        Visages détectés <ion-badge color="secondary">{{(resultInfo$|async)?.detected}}</ion-badge>
+                    </ion-label>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>
+                        Dataset de validation <ion-badge color="success">{{(resultInfo$|async)?.test}}</ion-badge>
+                    </ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>
+                        Dataset d'entrainement <ion-badge color="tertiary">{{(resultInfo$|async)?.train}}</ion-badge>
+                    </ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-col>
+
+        <ion-col size-lg="6" size="12">
+            <ion-list>
+                <ion-list-header lines="full" color="warning">
+                    <ion-label>
+                        <ion-icon name="apps"></ion-icon> &nbsp; <strong>Derniers Personnes Ajoutés</strong>
+                    </ion-label>
+                </ion-list-header>
+                <ion-item>
+                    <ion-label></ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label></ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label></ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label></ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-col>
+
+        <ion-col size-lg="6" size="12">
+            <ion-list>
+                <ion-list-header lines="full" color="tertiary">
+                    <ion-label>
+                        <ion-icon name="apps"></ion-icon> &nbsp; <strong>Derniers Visages Détectés</strong>
+                    </ion-label>
+                </ion-list-header>
+                <ion-item>
+                    <ion-label></ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label></ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label></ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label></ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center ion-align-self-center">
+
+        <ion-col size="2" >
+            <ion-card routerLink="/system/config" color="secondary" class="ion-text-center">
+                <ion-card-header>
+                    <ion-icon name="construct"></ion-icon>
+                    <ion-card-subtitle>Système</ion-card-subtitle>
+                    <ion-card-title>Configuration</ion-card-title>
+                </ion-card-header>
+            </ion-card>
+        </ion-col>
+
+        <ion-col size="2" >
+            <ion-card color="danger" class="ion-text-center">
+                <ion-card-header>
+                    <ion-icon name="desktop"></ion-icon>
+                    <ion-card-subtitle>En directe</ion-card-subtitle>
+                    <ion-card-title>Diffusion</ion-card-title>
+                </ion-card-header>
+            </ion-card>
+        </ion-col>
+
+        <ion-col size="2" >
+            <ion-card routerLink="/detected" color="warning" class="ion-text-center">
+                <ion-card-header>
+                    <ion-icon name="image"></ion-icon>
+                    <ion-card-subtitle>Personnes détectés</ion-card-subtitle>
+                    <ion-card-title>Visages détectés</ion-card-title>
+                </ion-card-header>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center ion-align-self-center">
+
+        <ion-col size="2" >
+            <ion-card routerLink="/persons_list" color="primary" class="ion-text-center">
+                <ion-card-header>
+                    <ion-icon name="people"></ion-icon>
+                    <ion-card-subtitle>Liste de personnes</ion-card-subtitle>
+                    <ion-card-title>Personnes</ion-card-title>
+                </ion-card-header>
+            </ion-card>
+        </ion-col>
+
+        <ion-col size="2" >
+            <ion-card routerLink="/system/camera-config" color="light" class="ion-text-center">
+                <ion-card-header>
+                    <ion-icon name="camera"></ion-icon>
+                    <ion-card-subtitle>Configuration</ion-card-subtitle>
+                    <ion-card-title>Camera</ion-card-title>
+                </ion-card-header>
+            </ion-card>
+        </ion-col>
+
+        <ion-col size="2" >
+            <ion-card routerLink="/system/training" color="medium" class="ion-text-center">
+                <ion-card-header>
+                    <ion-icon name="bar-chart"></ion-icon>
+                    <ion-card-subtitle>Modèle de reconnaissance</ion-card-subtitle>
+                    <ion-card-title>Entrainement</ion-card-title>
+                </ion-card-header>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+</ion-grid>
+
   </div>
 </ion-content>

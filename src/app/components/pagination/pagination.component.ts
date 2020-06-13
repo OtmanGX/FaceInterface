@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
 import {Pager} from '../../../model/pager';
 
 @Component({
@@ -7,7 +7,11 @@ import {Pager} from '../../../model/pager';
   styleUrls: ['./pagination.component.css']
 })
 
-export class PaginationComponent implements OnInit {
+export class PaginationComponent implements OnInit, OnChanges {
+  ngOnChanges(changes) {
+    this.pageSize = parseInt(this.pageSize.toString(), 10);
+    this.pager = new Pager(this.pageSize);
+  }
 
   @Input() pageSize: number;
   // tslint:disable-next-line:ban-types
@@ -21,11 +25,14 @@ export class PaginationComponent implements OnInit {
   pager: Pager;
 
   ngOnInit() {
-    this.pageSize = parseInt(this.pageSize.toString(), 10);
-    this.pager = new Pager(this.pageSize);
+
   }
 
   setPage(page: number) {
+    // if (page===1 && this.pager.totalPages!=this.pageSize) {
+    //   this.pager = new Pager(this.pageSize);
+    //   console.log("kayna")
+    // }
     if (page !== this.pager.currentPage) {
       this.pager.setPage(page);
       this.pageChanged.emit(page);

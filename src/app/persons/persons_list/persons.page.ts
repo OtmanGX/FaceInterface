@@ -5,7 +5,7 @@ import {
   ActionSheetController,
   AlertController,
   IonButtons,
-  IonSearchbar,
+  IonSearchbar, ModalController,
   PopoverController,
   ToastController
 } from '@ionic/angular';
@@ -16,6 +16,7 @@ import {ActivatedRoute, Route, Router} from '@angular/router';
 import {switchMap} from 'rxjs/operators';
 import { IonRefresher } from '@ionic/angular';
 import { HttpParams } from '../../http_params';
+import {MoveComponent} from "../../faces/detected/move/move.component";
 
 @Component({
   selector: 'app-persons',
@@ -30,6 +31,7 @@ export class PersonsPage implements OnInit {
               public popoverController: PopoverController,
               public toastController: ToastController,
               public alertController: AlertController,
+              public modalController: ModalController,
               public actionSheetController: ActionSheetController,
               private route: ActivatedRoute,
               private  router: Router) { }
@@ -59,6 +61,30 @@ export class PersonsPage implements OnInit {
       color
     });
     toast.present();
+  }
+
+  async presentModal(id) {
+    const modal = await this.modalController.create({
+      component: MoveComponent,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        id
+      }
+    });
+    modal.onWillDismiss().then(value => {
+      switch (value.data) {
+        case 'Success':
+          this.presentToast(db.SUCCESS_MSG);
+          //
+          break;
+        case 'Error':
+          this.presentToast(db.ERROR_MSG, 'danger');
+          break;
+      }
+      console.log('Modal result: ');
+      console.log(value);
+    });
+    return await modal.present();
   }
 
   async presentPopover(ev: any, i: number, person?: string) {
@@ -93,7 +119,12 @@ export class PersonsPage implements OnInit {
     setTimeout(() => {
       console.log('Async operation has ended');
       this.loadPersons();
-      event.target.complete();
+      try {
+        event.target.complete();
+      } catch (e) {
+        this.refresher.complete();
+      }
+
     }, 2000);
   }
 
@@ -279,6 +310,50 @@ export class PersonsPage implements OnInit {
       }]
     });
     await actionSheet.present();
+  }
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Danger!',
+      message: 'Etes-vous <strong>sûr</strong>!!!',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Supprimer',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async presentOtherOptions(ev: any) {
+    const popover = await this.popoverController.create({
+      component: PopoverEditComponent,
+      event: ev,
+      translucent: true,
+      componentProps: {data: {delete: 'Supprimer tout '}}
+    });
+    popover.onDidDismiss().then(value => {
+      console.log(value);
+      switch (value.data) {
+        case 'delete':
+          console.log("delete all");
+          this.presentAlertConfirm();
+          break;
+      }
+    });
+    return await popover.present();
   }
 
 }
