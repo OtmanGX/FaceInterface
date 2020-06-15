@@ -76,8 +76,8 @@
             <small><ion-icon size="small" slot="start" name="calendar"></ion-icon>{{face.created_at| date: 'yy/MM/dd HH:mm:ss'}}</small>
           </ion-label>
 
-          <ion-chip>
-            <ion-label [color]="face.instate?'success':'secondary'"> {{face.instate?'Entrée':'Sortie'}}</ion-label>
+          <ion-chip [color]="face.instate?'success':'secondary'">
+            <ion-label> {{face.instate?'Entrée':'Sortie'}}</ion-label>
           </ion-chip>
         </ion-item>
 

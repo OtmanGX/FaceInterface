@@ -1,5 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ActionSheetController, ModalController, PopoverController, ToastController} from '@ionic/angular';
+import {
+  ActionSheetController,
+  LoadingController,
+  ModalController,
+  PopoverController,
+  ToastController
+} from '@ionic/angular';
 import {ModalTrainComponent} from '../modal-train/modal-train.component';
 import {DatasetService} from '../../services/dataset.service';
 import {ActivatedRoute} from '@angular/router';
@@ -21,11 +27,13 @@ export class PersonDetailPage implements OnInit {
   params = new HttpParams();
   id;
   person;
+  loading;
   selectedElements: any[] = [];
   constructor(public modalController: ModalController,
               public service: DatasetService,
               public activatedRoute: ActivatedRoute,
               public popoverController: PopoverController,
+              public loadingController: LoadingController,
               public toastController: ToastController) { }
 
   ngOnInit() {
@@ -36,6 +44,18 @@ export class PersonDetailPage implements OnInit {
     }
     this.params.set('label', this.id);
     this.load_faces();
+  }
+
+  async presentLoading() {
+    this.loading = await this.loadingController.create({
+      cssClass: 'my-custom-class',
+      message: 'Attendez svp...',
+      duration: 12000
+    });
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+    console.log('Loading dismissed!');
   }
 
   getDataset() {
@@ -116,14 +136,18 @@ export class PersonDetailPage implements OnInit {
   }
 
   upload(images, dataset= 'Train') {
+    let i = 0;
     for (const image of images) {
+      i++;
       const formData = new FormData();
       formData.append('label', this.id);
       formData.append('dataset_type', dataset);
       formData.append('image', image, image.name);
       this.service.create(formData).subscribe(() => {
         console.log('Success');
-        this.load_faces();
+        if (images.length == i) {
+          this.load_faces();
+        }
       }, error => console.log('Error'));
     }
   }
@@ -145,10 +169,27 @@ export class PersonDetailPage implements OnInit {
   }
 
   deleteSelected() {
+    this.presentLoading();
+    let index = 0;
     this.selectedElements.forEach(id => {
-      this.deleteItem(id);
+      this.service.delete(id).subscribe(() => {
+        index++;
+        console.log(id);
+        console.log(this.selectedElements[this.selectedElements.length-1]);
+        if (id === this.selectedElements[this.selectedElements.length-1]){
+          this.presentToast(db.SUCCESS_MSG);
+          this.selectedElements = [];
+          this.loading.dismiss();
+          this.load_faces();
+        }
+
+      }, error => {
+        this.presentToast(db.ERROR_MSG, 'warning');
+        this.selectedElements = [];
+      });
+
     });
-    this.selectedElements = [];
+
   }
 
   move(i) {
@@ -160,15 +201,24 @@ export class PersonDetailPage implements OnInit {
           },
           error => console.log('Error'));
     } else {
+      this.presentLoading();
+      let index=0;
       i.forEach(id => {
         this.service.patch(id, data).subscribe(() => {
-              console.log('Success');
-              this.load_faces();
+          index++;
+          if (index == i.length()) {
+            this.presentToast(db.SUCCESS_MSG);
+            this.selectedElements = [];
+            this.load_faces();
+            this.loading.dismiss();
+          }
             },
-            error => console.log('Error'));
+            error => {
+          console.log('Error');
+              this.selectedElements = [];
+            });
       });
     }
-    this.selectedElements = [];
     }
 
   private deleteItem(id: number) {
