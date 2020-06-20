@@ -12,9 +12,10 @@ import { DetectedPage } from './detected.page';
 import { ComponentsModule } from '../../components.module';
 import {PopoverEditComponent} from '../../components/popover-edit/popover-edit.component';
 import {MoveComponent} from './move/move.component';
+import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
-  entryComponents : [MoveComponent],
+  entryComponents : [MoveComponent, FilterComponent],
     imports: [
         CommonModule,
         FormsModule,
@@ -22,6 +23,6 @@ import {MoveComponent} from './move/move.component';
         DetectedPageRoutingModule,
         ComponentsModule,
     ],
-  declarations: [DetectedPage, PaginationComponent, MoveComponent]
+  declarations: [DetectedPage, PaginationComponent, MoveComponent, FilterComponent]
 })
 export class DetectedPageModule {}

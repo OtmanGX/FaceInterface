@@ -17,6 +17,7 @@ import {switchMap} from 'rxjs/operators';
 import { IonRefresher } from '@ionic/angular';
 import { HttpParams } from '../../http_params';
 import {MoveComponent} from "../../faces/detected/move/move.component";
+import {ModalFilterComponent} from "./modal-filter/modal-filter.component";
 
 @Component({
   selector: 'app-persons',
@@ -141,60 +142,6 @@ export class PersonsPage implements OnInit {
     this.loadPersons();
   }
 
-  async presentAlertCheckBox() {
-    const alert = await this.alertController.create({
-      header: 'Filtre',
-      inputs: [
-        {
-          name: 'check1',
-          type: 'checkbox',
-          label: 'activé',
-          value: ['active', 'True']
-        },
-        {
-          name: 'check2',
-          type: 'checkbox',
-          label: 'Non activé',
-          value: ['active', 'True']
-        },
-        {
-          name: 'number1',
-          type: 'text',
-          label: 'Age >',
-        },
-        {
-          name: 'number2',
-          type: 'number',
-          label: 'Age <',
-        },
-        {
-          name: 'number3',
-          type: 'number',
-          label: 'Age = ',
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: () => {
-            console.log('Confirm Cancel');
-          }
-        }, {
-          text: 'Ok',
-          handler: (data) => {
-            console.log(data);
-            // this.params.filterParams = data;
-            // this.loadPersons();
-            console.log('Confirm Ok');
-          }
-        }
-      ]
-    });
-    await alert.present();
-
-  }
 
   async presentAlertRadio() {
     const alert = await this.alertController.create({
@@ -270,6 +217,30 @@ export class PersonsPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+
+  async presentFilterModal() {
+    const modal = await this.modalController.create({
+      component: ModalFilterComponent,
+      cssClass: 'my-custom-class',
+    });
+    modal.onWillDismiss().then(value => {
+      console.log(value);
+      this.params.filterParams = [];
+      if (value.data) {
+
+
+        // this.loadPersons();
+      }
+      // switch (value.data) {
+      //     case 'Success':
+      //         break;
+      //     case 'Error':
+      //         break;
+      // }
+    });
+    return await modal.present();
   }
 
   openDetail(id: number, person: string) {

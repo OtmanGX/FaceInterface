@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {ModalController} from "@ionic/angular";
 
 @Component({
-  selector: 'app-modal-filter',
-  templateUrl: './modal-filter.component.html',
-  styleUrls: ['./modal-filter.component.scss'],
+  selector: 'app-filter',
+  templateUrl: './filter.component.html',
+  styleUrls: ['./filter.component.scss'],
 })
-export class ModalFilterComponent implements OnInit {
+export class FilterComponent implements OnInit {
 
-  constructor(private modal:ModalController) { }
+  constructor(private modal: ModalController) { }
 
   ngOnInit() {}
 

@@ -1,3 +1,45 @@
-<p>
-  modal-filter works!
-</p>
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Filtrer</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="f.ngSubmit.emit()">Appliquer</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="dismiss()">Annuler</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-grid style="height: 100%">
+    <ion-row class="ion-align-items-center"
+             style="height:100%; flex-direction: column">
+      <ion-col size="12">
+        <ng-form id="ngForm" #f="ngForm" (ngSubmit)="submit(f.value)">
+          <ion-list>
+          <ion-list-header>
+            <h3>Date de création</h3>
+          </ion-list-header>
+            <div class="ion-margin-horizontal">
+            <ion-item>
+              <ion-label>Date début</ion-label>
+              <ion-datetime name="starttime" [ngModel]="" displayFormat="D MMM YYYY H:mm" placeholder="Sélectionner"></ion-datetime>
+            </ion-item>
+              <ion-item>
+              <ion-label>Date fin</ion-label>
+              <ion-datetime name="endtime" [ngModel]="" displayFormat="D MMM YYYY H:mm" placeholder="Sélectionner"></ion-datetime>
+            </ion-item>
+            </div>
+          </ion-list>
+        </ng-form>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+  <!--  <ion-list>-->
+  <!--    -->
+  <!--    -->
+  <!--  </ion-list>-->
+</ion-content>
+
+

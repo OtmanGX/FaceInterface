@@ -94,6 +94,9 @@ export class AppComponent implements OnInit {
       });
     });
   }
+  toggleDarkTheme(shouldAdd) {
+    document.body.classList.toggle('dark', shouldAdd);
+  }
 
   logout() {
     console.log('logout');
@@ -101,6 +104,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.toggleDarkTheme(true);
+
+
+// Add or remove the "dark" class based on if the media query matches
+
     // const path = window.location.pathname.split('folder/')[1];
     // if (path !== undefined) {
     //   this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());

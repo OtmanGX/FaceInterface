@@ -26,7 +26,7 @@ export class TrainingPage implements OnInit {
     this.loading = await this.loadingController.create({
       cssClass: 'my-custom-class',
       message: 'Attendez svp...',
-      duration: 12000
+      duration: 60000
     });
     await this.loading.present();
 

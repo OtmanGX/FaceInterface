@@ -11,7 +11,6 @@ import {Person, emptyPerson} from '../../../db'
 })
 export class AddPersonPage implements OnInit {
 
-  toggleState = true;
   labels: Set<string>;
   avatar;
   person:Person;

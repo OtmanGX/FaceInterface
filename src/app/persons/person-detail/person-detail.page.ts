@@ -138,17 +138,20 @@ export class PersonDetailPage implements OnInit {
   upload(images, dataset= 'Train') {
     let i = 0;
     for (const image of images) {
-      i++;
       const formData = new FormData();
       formData.append('label', this.id);
       formData.append('dataset_type', dataset);
       formData.append('image', image, image.name);
       this.service.create(formData).subscribe(() => {
         console.log('Success');
+        i++;
         if (images.length == i) {
           this.load_faces();
         }
-      }, error => console.log('Error'));
+      }, error => {
+        console.log('Error');
+        i++;
+      });
     }
   }
 

@@ -14,7 +14,7 @@ import { PopoverEditComponent } from '../../components/popover-edit/popover-edit
 import {ModalFilterComponent} from "./modal-filter/modal-filter.component";
 
 @NgModule({
-  entryComponents: [],
+  entryComponents: [ModalFilterComponent],
   imports: [
     CommonModule,
     FormsModule,

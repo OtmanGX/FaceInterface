@@ -1,0 +1,87 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Filtrer</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary" (click)="f.ngSubmit.emit()">Appliquer</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="danger" (click)="dismiss()">Annuler</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+  <ion-grid style="height: 100%">
+    <ion-row class="ion-align-items-center"
+             style="height:100%; flex-direction: column">
+      <ion-col size-lg="6" size-md="12">
+        <ng-form id="ngForm" #f="ngForm" (ngSubmit)="submit(f.value)">
+          <ion-list>
+
+            <div class="ion-margin-horizontal">
+            <ion-item>
+
+              <ion-radio-group name="identity" [ngModel]="'both'" value="both">
+                <ion-label color="medium" class="ion-text-wrap">Identité des personnes</ion-label>
+                <span class="ion-margin-start">
+                <ion-item>
+                  <label>Connues</label>
+                  <ion-radio slot="start" value="known"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <label>Inconnues</label>
+                  <ion-radio slot="start"  value="unknown"></ion-radio>
+                </ion-item>
+
+                <ion-item>
+                  <label>Les deux</label>
+                  <ion-radio slot="start" value="both"></ion-radio>
+                </ion-item>
+                  </span>
+              </ion-radio-group>
+            </ion-item>
+
+            <ion-item>
+              <ion-list>
+              <ion-label color="medium">Etat</ion-label>
+              <ion-item>
+              <ion-checkbox [ngModel]="" name="statein"></ion-checkbox>
+              <label class="ion-margin-horizontal">Entrée</label>
+              <ion-checkbox color="secondary" [ngModel]="" name="stateout"></ion-checkbox>
+              <label class="ion-margin-horizontal">Sortie</label>
+              </ion-item>
+              </ion-list>
+            </ion-item>
+
+              <ion-item>
+                <ion-list>
+                  <ion-label color="medium">Précision</ion-label>
+                  <ion-item>
+                    <label class="ion-margin-end"> plus de 0.8 </label>
+                    <ion-checkbox color="secondary" [ngModel]="" name="precision_gt8"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <label class="ion-margin-end"> plus de 0.7 </label>
+                    <ion-checkbox color="secondary" [ngModel]="" name="precision_gt7"></ion-checkbox>
+                  </ion-item>
+                  <ion-item>
+                    <label class="ion-margin-end"> moins de 0.6 </label>
+                    <ion-checkbox color="secondary" [ngModel]="" name="precision_lt6"></ion-checkbox>
+                  </ion-item>
+                </ion-list>
+            </ion-item>
+            </div>
+          </ion-list>
+        </ng-form>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+  <!--  <ion-list>-->
+  <!--    -->
+  <!--    -->
+  <!--  </ion-list>-->
+</ion-content>
+
+

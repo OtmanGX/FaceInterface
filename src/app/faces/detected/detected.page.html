@@ -4,8 +4,8 @@
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <ion-grid *ngIf="grid; else list">
-    <ion-row id="zone1" class="zone" *ngIf="faces">
+  <ion-grid >
+    <ion-row id="zone1" class="zone" *ngIf="grid && faces; else list">
 
       <ion-chip *ngIf="!faces.length" color="warning">
         <ion-label color="dark">Pas de nouvelles pour le moment</ion-label>
@@ -26,7 +26,7 @@
           </ion-card-content>
           <ion-img [src]="face.image"></ion-img>
           <ion-card-header>
-            <ion-card-title>{{face.label?face.label.name:'Inconnu'+face.unknown_number}}
+            <ion-card-title>{{face.label.name}}
               <ion-icon [color]="face.instate?'tertiary':'danger'" [name]="face.instate?'log-in':'log-out'"></ion-icon>
             </ion-card-title>
               <ion-card-subtitle>
@@ -38,38 +38,27 @@
       </ion-col>
     </ion-row>
 
-    <ion-row class="ion-align-items-center ion-justify-content-center ion-text-center">
-      <ion-col class="ion-align-self-center ">
-        <div>
-    <app-pagination *ngIf="numberpages" [pageSize]="numberpages"
-                    (pageChanged)="OnPageChanged($event)" >
-    </app-pagination>
-        </div>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+    <ng-template #list>
+      <ion-list *ngIf="faces">
+        <ion-list-header color="primary">
+          <!--        <ion-avatar></ion-avatar>-->
+          <ion-label>
+            Personne
+          </ion-label>
+          Date
+          <ion-label>
 
-  <ng-template #list>
-    <ion-list *ngIf="faces">
-      <ion-list-header color="primary">
-<!--        <ion-avatar></ion-avatar>-->
-        <ion-label>
-          Personne
-        </ion-label>
-        Date
-        <ion-label>
-
-        </ion-label>
-        <ion-label>
-          Etat
-        </ion-label>
-      </ion-list-header>
+          </ion-label>
+          <ion-label>
+            Etat
+          </ion-label>
+        </ion-list-header>
         <ion-item *ngFor="let face of faces">
           <ion-avatar>
             <ion-img [src]="face.image"></ion-img>
           </ion-avatar>
           <ion-label>
-            {{face.label?face.label.name:'Inconnu'+face.unknown_number}}
+            {{face.label.name}}
           </ion-label>
 
           <ion-label>
@@ -81,8 +70,19 @@
           </ion-chip>
         </ion-item>
 
-    </ion-list>
-  </ng-template>
+      </ion-list>
+    </ng-template>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center ion-text-center">
+      <ion-col class="ion-align-self-center ">
+        <div>
+    <app-pagination *ngIf="numberpages" [pageSize]="numberpages"
+                    (pageChanged)="OnPageChanged($event)" >
+    </app-pagination>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
 </ion-content>
 <ion-footer >
@@ -123,7 +123,7 @@
             <label><small>rafraîchir</small></label>
           </div>
         </ion-button>
-        <ion-button>
+        <ion-button (click)="presentFilterModal()">
           <div>
             <ion-icon name="filter"></ion-icon>
             <label><small>Filtrer</small></label>

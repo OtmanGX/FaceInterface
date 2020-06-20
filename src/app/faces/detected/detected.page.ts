@@ -7,6 +7,7 @@ import {PopoverEditComponent} from '../../components/popover-edit/popover-edit.c
 import * as db from '../../../db';
 import {ModalTrainComponent} from '../../persons/modal-train/modal-train.component';
 import {MoveComponent} from './move/move.component';
+import {FilterComponent} from './filter/filter.component';
 
 @Component({
   selector: 'app-detected',
@@ -54,6 +55,7 @@ export class DetectedPage implements OnInit {
         setTimeout(() => {
             console.log('Async operation has ended');
             this.params.set('page', 1)
+            this.params.filterParams = [];
             this.loadDetectedFaces();
             try {
                 event.target.complete();
@@ -102,6 +104,48 @@ export class DetectedPage implements OnInit {
         });
         return await modal.present();
     }
+
+    async presentFilterModal() {
+        const modal = await this.modalController.create({
+            component: FilterComponent,
+            cssClass: 'my-custom-class',
+        });
+        modal.onWillDismiss().then(value => {
+            console.log(value);
+            this.params.filterParams = [];
+            if (value.data) {
+                switch (value.data.identity) {
+                    case 'known':
+                        this.params.filterParams.push(["label__unknown",0]);
+                        break;
+                    case 'unknown':
+                        this.params.filterParams.push(["label__unknown",1]);
+                        console.log("unknown");
+                        break;
+                }
+                if (value.data.statein)
+                    this.params.filterParams.push(["instate",1]);
+                if (value.data.stateout)
+                    this.params.filterParams.push(["instate",0]);
+                if (value.data.precision_gt8)
+                    this.params.filterParams.push(["precision__gt",0.8]);
+                else if (value.data.precision_gt7)
+                    this.params.filterParams.push(["precision__gt",0.7]);
+                else if (value.data.precision_gt8)
+                    this.params.filterParams.push(["precision__lt6",0.6]);
+
+                this.loadDetectedFaces();
+            }
+            // switch (value.data) {
+            //     case 'Success':
+            //         break;
+            //     case 'Error':
+            //         break;
+            // }
+        });
+        return await modal.present();
+    }
+
     async presentPopover(ev: any, i: number) {
       this.selectedElements = [];
         const popover = await this.popoverController.create({
