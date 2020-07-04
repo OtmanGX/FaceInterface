@@ -31,6 +31,7 @@ export class DetectedPage implements OnInit {
   grid = true;
   selectedElements: any[] = [];
 
+
   ngOnInit() {
     this.params = new HttpParams();
     this.loadDetectedFaces();
@@ -103,6 +104,71 @@ export class DetectedPage implements OnInit {
             console.log(value);
         });
         return await modal.present();
+    }
+
+    async presentTri() {
+        const alert = await this.alertController.create({
+            cssClass: 'tri-alert',
+            header: 'Tri',
+            inputs: [
+                {
+                    name: 'radio1',
+                    type: 'radio',
+                    label: 'Date de création- Asc',
+                    value: 'created_at',
+                    checked: true
+                },
+                {
+                    name: 'radio2',
+                    type: 'radio',
+                    label: 'Date de création- Desc',
+                    value: '-created_at'
+                },
+                {
+                    name: 'radio3',
+                    type: 'radio',
+                    label: 'Nom de personne- Asc',
+                    value: 'label__name'
+                },
+                {
+                    name: 'radio3',
+                    type: 'radio',
+                    label: 'Nom de personne- Desc',
+                    value: '-label__name'
+                },
+                {
+                    name: 'radio3',
+                    type: 'radio',
+                    label: 'Precision- Asc',
+                    value: 'precision'
+                },
+                {
+                    name: 'radio3',
+                    type: 'radio',
+                    label: 'Precision- Desc',
+                    value: '-precision'
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: () => {
+                        console.log('Confirm Cancel');
+                    }
+                }, {
+                    text: 'Ok',
+                    handler: (radioChecked) => {
+                        console.log(radioChecked);
+                        this.params.set('ordering', radioChecked);
+                        this.loadDetectedFaces();
+                    }
+                }
+            ]
+        });
+
+        await alert.present();
     }
 
     async presentFilterModal() {

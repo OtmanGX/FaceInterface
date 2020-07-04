@@ -78,6 +78,11 @@ const routes: Routes = [
     path: 'system/camera-config',
     loadChildren: () => import('./system/camera-config/camera-config.module').then( m => m.CameraConfigPageModule),
     canActivate: [AuthGuardService]
+  },
+  {
+    path: 'pointage',
+    loadChildren: () => import('./faces/pointage/pointage.module').then( m => m.PointagePageModule),
+    canActivate: [AuthGuardService]
   }
 ];
 

@@ -1,0 +1,88 @@
+<app-header [title]="'Personnes pointées'"> </app-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-grid *ngIf="pointages">
+    <ion-chip *ngIf="!pointages.length" color="warning">
+      <ion-label color="dark">Pas de nouvelles pour le moment</ion-label>
+    </ion-chip>
+      <ion-list *ngIf="pointages.length">
+        <ion-list-header color="primary">
+          <!--        <ion-avatar></ion-avatar>-->
+          <ion-label>
+            Personne
+          </ion-label>
+
+          <ion-label>
+            Heure Entrée
+          </ion-label>
+          <ion-label>
+            Heure Sortie
+          </ion-label>
+        </ion-list-header>
+
+        <ion-item *ngFor="let pointage of pointages">
+          <ion-label>
+            {{pointage.person.name}}
+          </ion-label>
+
+          <ion-label>
+            <small><ion-icon size="small" slot="start" name="calendar"></ion-icon>{{pointage.date_entree| date: 'yy/MM/dd HH:mm:ss'}}</small>
+          </ion-label>
+
+          <ion-label>
+            <small><ion-icon size="small" slot="start" name="calendar"></ion-icon>{{pointage.date_sortie| date: 'yy/MM/dd HH:mm:ss'}}</small>
+          </ion-label>
+
+        </ion-item>
+
+      </ion-list>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center ion-text-center">
+      <ion-col class="ion-align-self-center ">
+        <div>
+          <app-pagination *ngIf="numberpages" [pageSize]="numberpages"
+                          (pageChanged)="OnPageChanged($event)" >
+          </app-pagination>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+
+<ion-footer >
+  <ion-toolbar>
+      <ion-buttons class="ion-align-items-center ion-justify-content-center ion-align-self-center">
+        <ion-searchbar #searchbar animated showCancelButton="focus" style="flex-basis: 30%"
+                       (change)="search(searchbar.value)"
+                       (ionCancel)="cancelSearch()">
+
+        </ion-searchbar>
+        <ion-button (click)="doRefresh($event)">
+          <div>
+            <ion-icon name="refresh-circle"></ion-icon>
+            <label><small>rafraîchir</small></label>
+          </div>
+        </ion-button>
+        <ion-button (click)="presentModal()">
+          <div>
+            <ion-icon name="filter"></ion-icon>
+            <label><small>Filtrer</small></label>
+          </div>
+        </ion-button>
+        <ion-button (click)="presentTri()">
+          <div>
+            <ion-icon name="funnel"></ion-icon>
+            <label><small>Trier</small></label>
+          </div>
+        </ion-button>
+        <ion-button>
+        </ion-button>
+      </ion-buttons>
+
+  </ion-toolbar>
+</ion-footer>

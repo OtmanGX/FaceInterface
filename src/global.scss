@@ -37,3 +37,10 @@
 .my-action-sheet .action-sheet-container {
   justify-content: center;
 }
+
+.tri-alert {
+  .alert-wrapper {
+    max-width: 400px;
+    min-width: 280px;
+  }
+}

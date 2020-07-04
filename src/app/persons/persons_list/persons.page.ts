@@ -145,6 +145,7 @@ export class PersonsPage implements OnInit {
 
   async presentAlertRadio() {
     const alert = await this.alertController.create({
+      cssClass: 'tri-alert',
       header: 'Tri',
       inputs: [
         {

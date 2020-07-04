@@ -32,7 +32,13 @@
                 </ion-list-header>
                 <ion-item>
                     <ion-label>
-                        nombre de personnes <ion-badge color="primary">{{(resultInfo$|async)?.persons}}</ion-badge>
+                        Personnes <ion-badge color="primary">{{(resultInfo$|async)?.persons}}</ion-badge>
+                    </ion-label>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>
+                        Pointages <ion-badge color="warning">{{(resultInfo$|async)?.pointage}}</ion-badge>
                     </ion-label>
                 </ion-item>
 
@@ -59,7 +65,7 @@
             <ion-list>
                 <ion-list-header lines="full" color="warning">
                     <ion-label>
-                        <ion-icon name="apps"></ion-icon> &nbsp; <strong>Derniers Personnes Ajoutés</strong>
+                        <ion-icon name="apps"></ion-icon> &nbsp;<strong>Derniers Personnes Ajoutés</strong>
                     </ion-label>
                 </ion-list-header>
                 <ion-item>
@@ -96,6 +102,16 @@
                 <ion-item>
                     <ion-label></ion-label>
                 </ion-item>
+            </ion-list>
+        </ion-col>
+        <ion-col size-lg="6" size="12">
+            <ion-list>
+                <ion-list-header lines="full" color="success">
+                    <ion-label>
+                        <ion-icon name="apps"></ion-icon> &nbsp;<strong>Nombre d'heures de travail durant la semaine</strong>
+                    </ion-label>
+                </ion-list-header>
+                <canvas #barChart></canvas>
             </ion-list>
         </ion-col>
     </ion-row>

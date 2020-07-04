@@ -15,7 +15,7 @@ import {MoveComponent} from './move/move.component';
 import { FilterComponent } from './filter/filter.component';
 
 @NgModule({
-  entryComponents : [MoveComponent, FilterComponent],
+    entryComponents: [MoveComponent, FilterComponent],
     imports: [
         CommonModule,
         FormsModule,
@@ -23,6 +23,9 @@ import { FilterComponent } from './filter/filter.component';
         DetectedPageRoutingModule,
         ComponentsModule,
     ],
-  declarations: [DetectedPage, PaginationComponent, MoveComponent, FilterComponent]
+    exports: [
+        PaginationComponent
+    ],
+    declarations: [DetectedPage, PaginationComponent, MoveComponent, FilterComponent]
 })
 export class DetectedPageModule {}

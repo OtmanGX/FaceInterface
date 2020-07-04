@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     {
       title: 'Tableau de bord',
       url: '/home',
-      icon: 'home'
+      icon: 'apps'
     },
     // {
     //   title: 'Mon compte',
@@ -31,6 +31,11 @@ export class AppComponent implements OnInit {
       title: 'Personnes détectés',
       url: '/detected',
       icon: 'body'
+    },
+    {
+      title: 'Pointages',
+      url: '/pointage',
+      icon: 'checkmark-done'
     },
     // <ion-icon name="reorder-four"></ion-icon>
     {
