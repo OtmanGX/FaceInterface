@@ -68,39 +68,30 @@
                         <ion-icon name="apps"></ion-icon> &nbsp;<strong>Derniers Personnes Ajoutés</strong>
                     </ion-label>
                 </ion-list-header>
-                <ion-item>
-                    <ion-label></ion-label>
-                </ion-item>
-                <ion-item>
-                    <ion-label></ion-label>
-                </ion-item>
-                <ion-item>
-                    <ion-label></ion-label>
-                </ion-item>
-                <ion-item>
-                    <ion-label></ion-label>
+                <ion-item *ngFor="let person of (persons$| async | slice:0:4)">
+                    <ion-avatar slot="start">
+                        <ion-img [src]="'assets/avatar.png'"></ion-img>
+                    </ion-avatar>
+                    <ion-label> {{person.name | titlecase}} </ion-label>
+                    <ion-label>
+                        <small><ion-icon size="small" slot="start" name="calendar"></ion-icon> &nbsp; {{person.created_at| date: 'yy/MM/dd HH:mm:ss'}}</small>
+                    </ion-label>
                 </ion-item>
             </ion-list>
         </ion-col>
 
         <ion-col size-lg="6" size="12">
-            <ion-list>
+            <ion-list *ngIf="faces">
                 <ion-list-header lines="full" color="tertiary">
                     <ion-label>
                         <ion-icon name="apps"></ion-icon> &nbsp; <strong>Derniers Visages Détectés</strong>
                     </ion-label>
                 </ion-list-header>
-                <ion-item>
-                    <ion-label></ion-label>
-                </ion-item>
-                <ion-item>
-                    <ion-label></ion-label>
-                </ion-item>
-                <ion-item>
-                    <ion-label></ion-label>
-                </ion-item>
-                <ion-item>
-                    <ion-label></ion-label>
+                <ion-item *ngFor="let face of faces | slice:0:4">
+                    <ion-label>{{face.label.name}}</ion-label>
+                    <ion-label>
+                        <small><ion-icon size="small" slot="start" name="calendar"></ion-icon> &nbsp; {{face.created_at| date: 'yy/MM/dd HH:mm:ss'}}</small>
+                    </ion-label>
                 </ion-item>
             </ion-list>
         </ion-col>
@@ -108,7 +99,7 @@
             <ion-list>
                 <ion-list-header lines="full" color="success">
                     <ion-label>
-                        <ion-icon name="apps"></ion-icon> &nbsp;<strong>Nombre d'heures de travail durant la semaine</strong>
+                        <ion-icon name="apps"></ion-icon> &nbsp;<strong>Nombre d'heures de chaque personne durant la semaine</strong>
                     </ion-label>
                 </ion-list-header>
                 <canvas #barChart></canvas>
@@ -118,7 +109,7 @@
 
     <ion-row class="ion-align-items-center ion-justify-content-center ion-align-self-center">
 
-        <ion-col size="2" >
+        <ion-col size-lg="2" size-md="4">
             <ion-card routerLink="/system/config" color="secondary" class="ion-text-center">
                 <ion-card-header>
                     <ion-icon name="construct"></ion-icon>
@@ -128,7 +119,7 @@
             </ion-card>
         </ion-col>
 
-        <ion-col size="2" >
+        <ion-col size-lg="2" size-md="4" >
             <ion-card color="danger" class="ion-text-center">
                 <ion-card-header>
                     <ion-icon name="desktop"></ion-icon>
@@ -138,7 +129,7 @@
             </ion-card>
         </ion-col>
 
-        <ion-col size="2" >
+        <ion-col size-lg="2" size-md="4" >
             <ion-card routerLink="/detected" color="warning" class="ion-text-center">
                 <ion-card-header>
                     <ion-icon name="image"></ion-icon>
@@ -151,7 +142,7 @@
 
     <ion-row class="ion-align-items-center ion-justify-content-center ion-align-self-center">
 
-        <ion-col size="2" >
+        <ion-col size-lg="2" size-md="4" >
             <ion-card routerLink="/persons_list" color="primary" class="ion-text-center">
                 <ion-card-header>
                     <ion-icon name="people"></ion-icon>
@@ -161,7 +152,7 @@
             </ion-card>
         </ion-col>
 
-        <ion-col size="2" >
+        <ion-col size-lg="2" size-md="4" >
             <ion-card routerLink="/system/camera-config" color="light" class="ion-text-center">
                 <ion-card-header>
                     <ion-icon name="camera"></ion-icon>
@@ -171,7 +162,7 @@
             </ion-card>
         </ion-col>
 
-        <ion-col size="2" >
+        <ion-col size-lg="2" size-md="4" >
             <ion-card routerLink="/system/training" color="medium" class="ion-text-center">
                 <ion-card-header>
                     <ion-icon name="bar-chart"></ion-icon>

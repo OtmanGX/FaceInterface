@@ -10,10 +10,25 @@
 <!--      <h1>Persons</h1>-->
 <!--    </ion-list-header>-->
 
+    <ion-item color="secondary" lines="unset">
+      <ion-avatar slot="start">
+        <ion-img [src]="'assets/avatar.png'"></ion-img>
+      </ion-avatar>
+      <ion-label>
+        Nom
+      </ion-label>
+
+      <ion-label>
+        Créé le
+      </ion-label>
+
+        Actions
+
+    </ion-item>
     <ion-chip *ngIf="!(persons$|async)?.length" color="warning">
       <ion-label color="dark">Pas de nouvelles pour le moment</ion-label>
     </ion-chip>
-    <ion-item class="ion-activate" *ngFor="let person of (persons$| async)" lines="unset">
+    <ion-item class="ion-activate" *ngFor="let person of (persons$| async | slice:0:4)" lines="unset">
       <ion-avatar slot="start">
         <ion-img [src]="'assets/avatar.png'"></ion-img>
       </ion-avatar>
@@ -37,6 +52,9 @@
           </ion-chip>
         </h3>
         </div>
+      </ion-label>
+      <ion-label>
+        <ion-icon size="small" slot="start" name="calendar"></ion-icon> &nbsp; {{person.created_at| date: 'yy/MM/dd HH:mm:ss'}}
       </ion-label>
 
       <ion-button fill="clear" (click)="presentActionSheet(person)">

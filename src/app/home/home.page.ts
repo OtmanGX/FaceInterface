@@ -4,6 +4,7 @@ import {SystemService} from "../services/system.service";
 import {DashboardService} from "../services/dashboard.service";
 import { Chart } from 'chart.js';
 import {PersonsService} from "../services/persons.service";
+import {DetectedService} from "../services/detected.service";
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,9 @@ export class HomePage implements OnInit {
 
   resultInfo$;
   state$;
+  persons$;
+  faces$;
+    faces: any;
   bars: any;
   colorArray: any;
   constructor(private toastController: ToastController,
@@ -22,12 +26,19 @@ export class HomePage implements OnInit {
               private systemService:SystemService,
               private dashService:DashboardService,
               private personService:PersonsService,
+              private detectedService:DetectedService,
               ) { }
 
   ngOnInit() {
     this.state$ = this.systemService.getState();
     this.resultInfo$ = this.dashService.getDashboardInfo();
     this.createBarChart();
+    this.persons$ = this.personService.getAll({ordering:'-created_at'});
+    this.faces$ = this.detectedService.getAllByPage({});
+    this.faces$.subscribe(
+        value => {
+          this.faces = value.results;
+        });
   }
 
   // Charts

@@ -29,6 +29,7 @@ export class PointagePage implements OnInit {
 
   ngOnInit() {
     this.params = new HttpParams();
+    this.params.set('date', 'today');
     this.loadPointageList();
   }
 
@@ -73,8 +74,11 @@ export class PointagePage implements OnInit {
       cssClass: 'my-custom-class',
     });
     modal.onWillDismiss().then(value => {
-      console.log('Modal result: ');
-      console.log(value);
+      let data = value.data;
+      if (data) {
+        this.params.filterParams = Object.entries(data);
+        this.loadPointageList();
+      }
     });
     return await modal.present();
   }
