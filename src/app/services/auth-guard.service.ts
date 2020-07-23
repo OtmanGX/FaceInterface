@@ -10,6 +10,8 @@ export class AuthGuardService implements CanActivate {
   constructor(public auth: AuthService) {}
 
   canActivate(): boolean {
-    return this.auth.isAuthenticated();
+    let value = this.auth.isAuthenticated();
+    // if (value) this.auth.checkToken();
+    return value;
   }
 }

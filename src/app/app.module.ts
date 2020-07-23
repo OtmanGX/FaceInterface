@@ -41,7 +41,7 @@ export function jwtOptions(storage) {
         useFactory: jwtOptions,
         deps: [Storage]
       }, config : {
-        skipWhenExpired: false
+        skipWhenExpired: true
       }
     }),
   ],
