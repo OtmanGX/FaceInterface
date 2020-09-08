@@ -17,8 +17,9 @@ export class HomePage implements OnInit {
   resultInfo$;
   state$;
   persons$;
+  availablePersons$;
   faces$;
-    faces: any;
+  faces: any;
   bars: any;
   colorArray: any;
   constructor(private toastController: ToastController,
@@ -32,13 +33,14 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.state$ = this.systemService.getState();
     this.resultInfo$ = this.dashService.getDashboardInfo();
-    this.createBarChart();
+    // this.createBarChart();
     this.persons$ = this.personService.getAll({ordering:'-created_at'});
+    this.availablePersons$ = this.personService.availablePersons();
     this.faces$ = this.detectedService.getAllByPage({});
-    this.faces$.subscribe(
-        value => {
-          this.faces = value.results;
-        });
+    // this.faces$.subscribe(
+    //     value => {
+    //       this.faces = value.results;
+    //     });
   }
 
   // Charts

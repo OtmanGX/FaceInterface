@@ -35,7 +35,7 @@ export class PersonsPage implements OnInit {
               public modalController: ModalController,
               public actionSheetController: ActionSheetController,
               private route: ActivatedRoute,
-              private  router: Router) { }
+              private  router: Router) {}
 
   persons$: Observable<object[]>;
   params: HttpParams;

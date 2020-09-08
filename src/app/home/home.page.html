@@ -24,19 +24,37 @@
     </ion-row>
     <ion-row class="ion-justify-content-center ion-align-self-center">
         <ion-col size-lg="6" size="12">
-            <ion-card >
-                <ion-item lines="full">
-                    <ion-icon name="pin" slot="start"></ion-icon>
-                    <ion-label><h1>48<sub>Capacité</sub></h1></ion-label>
-                </ion-item>
-            </ion-card>
+<!--            <ion-card >-->
+<!--                <ion-item lines="full">-->
+<!--                    <ion-icon name="pin" slot="start"></ion-icon>-->
+<!--                    <ion-label><h1>48<sub>Capacité</sub></h1></ion-label>-->
+<!--                </ion-item>-->
+<!--            </ion-card>-->
 
-            <ion-card>
-                <ion-item lines="full">
-                    <ion-icon name="pin" slot="start"></ion-icon>
-                    <ion-label><h1>48<sub>Places disponibles</sub></h1></ion-label>
-                </ion-item>
+            <ion-card color="tertiary">
+                <ion-card-header>
+                    <ion-card-subtitle><b>Capacité</b></ion-card-subtitle>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <label style="font-size: 2.5rem">50</label>
+                </ion-card-content>
             </ion-card>
+            <ion-card color="primary">
+                <ion-card-header>
+                    <ion-card-subtitle><b>Personnes disponibles</b></ion-card-subtitle>
+                </ion-card-header>
+
+                <ion-card-content>
+                    <label style="font-size: 2.5rem">{{(resultInfo$|async)?.available_persons}}</label>
+                </ion-card-content>
+            </ion-card>
+<!--            <ion-card color="primary">-->
+<!--                <ion-item lines="full">-->
+<!--                    <ion-icon name="pin" slot="start"></ion-icon>-->
+<!--                    <ion-label><h1>{{(resultInfo$|async)?.available_persons}}<sub>Personnes disponibles</sub></h1></ion-label>-->
+<!--                </ion-item>-->
+<!--            </ion-card>-->
         </ion-col>
         <ion-col size-lg="6" size="12">
             <ion-list>
@@ -75,7 +93,22 @@
                 </ion-item>
             </ion-list>
         </ion-col>
-
+        <ion-col size-lg="6" size="12">
+            <ion-list>
+                <ion-list-header lines="full" color="success">
+                    <ion-label>
+                        <ion-icon name="apps"></ion-icon> &nbsp; <strong>Personnes disponibles</strong>
+                    </ion-label>
+                </ion-list-header>
+                <ion-item *ngFor="let person of (availablePersons$| async)">
+                    <ion-avatar slot="start">
+                        <ion-img [src]="'assets/avatar.png'"></ion-img>
+                    </ion-avatar>
+                    <ion-label>{{person.name}}</ion-label>
+                    <ion-label i18n>{{person.last_time | timeDiff}}</ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-col>
         <ion-col size-lg="6" size="12">
             <ion-list>
                 <ion-list-header lines="full" color="warning">
@@ -102,7 +135,7 @@
                         <ion-icon name="apps"></ion-icon> &nbsp; <strong>Derniers Visages Détectés</strong>
                     </ion-label>
                 </ion-list-header>
-                <ion-item *ngFor="let face of faces | slice:0:4">
+                <ion-item *ngFor="let face of faces$ | async | slice:0:4">
                     <ion-label>{{face.label.name}}</ion-label>
                     <ion-label>
                         <small><ion-icon size="small" slot="start" name="calendar"></ion-icon> &nbsp; {{face.created_at| date: 'yy/MM/dd HH:mm:ss'}}</small>
@@ -110,52 +143,53 @@
                 </ion-item>
             </ion-list>
         </ion-col>
-        <ion-col size-lg="6" size="12">
-            <ion-list>
-                <ion-list-header lines="full" color="success">
-                    <ion-label>
-                        <ion-icon name="apps"></ion-icon> &nbsp;<strong>Nombre d'heures de chaque personne durant la semaine</strong>
-                    </ion-label>
-                </ion-list-header>
-                <canvas #barChart></canvas>
-            </ion-list>
-        </ion-col>
+
+<!--        <ion-col size-lg="6" size="12">-->
+<!--            <ion-list>-->
+<!--                <ion-list-header lines="full" color="success">-->
+<!--                    <ion-label>-->
+<!--                        <ion-icon name="apps"></ion-icon> &nbsp;<strong>Nombre d'heures de chaque personne durant la semaine</strong>-->
+<!--                    </ion-label>-->
+<!--                </ion-list-header>-->
+<!--                <canvas #barChart></canvas>-->
+<!--            </ion-list>-->
+<!--        </ion-col>-->
     </ion-row>
+    <ion-row class="menu ion-align-items-center ion-justify-content-center ion-align-self-center">
 
-    <ion-row class="ion-align-items-center ion-justify-content-center ion-align-self-center">
+            <ion-col size-lg="2" size-md="4">
+                <ion-card routerLink="/system/config" color="secondary" class="ion-text-center">
+                    <ion-card-header>
+                        <ion-icon name="construct"></ion-icon>
+                        <ion-card-subtitle>Système</ion-card-subtitle>
+                        <ion-card-title>Configuration</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
 
-        <ion-col size-lg="2" size-md="4">
-            <ion-card routerLink="/system/config" color="secondary" class="ion-text-center">
-                <ion-card-header>
-                    <ion-icon name="construct"></ion-icon>
-                    <ion-card-subtitle>Système</ion-card-subtitle>
-                    <ion-card-title>Configuration</ion-card-title>
-                </ion-card-header>
-            </ion-card>
-        </ion-col>
+            <ion-col size-lg="2" size-md="4" >
+                <ion-card color="danger" class="ion-text-center">
+                    <ion-card-header>
+                        <ion-icon name="desktop"></ion-icon>
+                        <ion-card-subtitle>En directe</ion-card-subtitle>
+                        <ion-card-title>Diffusion</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
 
-        <ion-col size-lg="2" size-md="4" >
-            <ion-card color="danger" class="ion-text-center">
-                <ion-card-header>
-                    <ion-icon name="desktop"></ion-icon>
-                    <ion-card-subtitle>En directe</ion-card-subtitle>
-                    <ion-card-title>Diffusion</ion-card-title>
-                </ion-card-header>
-            </ion-card>
-        </ion-col>
+            <ion-col size-lg="2" size-md="4" >
+                <ion-card routerLink="/detected" color="warning" class="ion-text-center">
+                    <ion-card-header>
+                        <ion-icon name="image"></ion-icon>
+                        <ion-card-subtitle>Personnes détectés</ion-card-subtitle>
+                        <ion-card-title>Visages détectés</ion-card-title>
+                    </ion-card-header>
+                </ion-card>
+            </ion-col>
+        </ion-row>
 
-        <ion-col size-lg="2" size-md="4" >
-            <ion-card routerLink="/detected" color="warning" class="ion-text-center">
-                <ion-card-header>
-                    <ion-icon name="image"></ion-icon>
-                    <ion-card-subtitle>Personnes détectés</ion-card-subtitle>
-                    <ion-card-title>Visages détectés</ion-card-title>
-                </ion-card-header>
-            </ion-card>
-        </ion-col>
-    </ion-row>
 
-    <ion-row class="ion-align-items-center ion-justify-content-center ion-align-self-center">
+    <ion-row class="menu ion-align-items-center ion-justify-content-center ion-align-self-center">
 
         <ion-col size-lg="2" size-md="4" >
             <ion-card routerLink="/persons_list" color="primary" class="ion-text-center">

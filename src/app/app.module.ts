@@ -12,9 +12,15 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 // Jwt
 import { JwtModule, JWT_OPTIONS, JwtInterceptor } from '@auth0/angular-jwt';
-
 // Services
 import {PersonsService} from './services/persons.service';
+
+// Locale
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+
+// the second parameter 'fr' is optional
+registerLocaleData(localeFr, 'fr');
 
 export function jwtOptions(storage) {
   return {
@@ -40,7 +46,7 @@ export function jwtOptions(storage) {
         provide: JWT_OPTIONS,
         useFactory: jwtOptions,
         deps: [Storage]
-      }, config : {
+      }, config: {
         skipWhenExpired: true
       }
     }),
@@ -49,7 +55,7 @@ export function jwtOptions(storage) {
     StatusBar,
     SplashScreen,
     PersonsService,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
   ],
   bootstrap: [AppComponent]
 })

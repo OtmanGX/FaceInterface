@@ -36,7 +36,7 @@
       <ion-label class="ion-text-wrap">
         <div slot="start">
         <h2 style="display: inline; font-size: large">
-          {{person.name | titlecase}}
+          {{person.name | titlecase}} <ion-icon *ngIf="person.available" color="success" name="ellipse"></ion-icon>
         </h2>
           <span *ngIf="person.age" style="color: #7974ff">
           <small>{{person.age}} ans</small>

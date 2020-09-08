@@ -30,6 +30,11 @@ ion-content ion-toolbar {
   --background: transparent;
 }
 
-ion-card {
-  --ion-background-color: linear-gradient(#4786ef, #f4f5f8);
+
+.menu ion-card{
+  height: 200px;
 }
+
+//ion-card {
+//  --ion-background-color: linear-gradient(#4786ef, #f4f5f8);
+//}
